@@ -32,6 +32,7 @@ greendao {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$rootProject.androidSupport"
+    implementation "com.android.support:design:$rootProject.androidSupport"
     implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayout"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation "com.android.support.test:runner:$rootProject.testRunner"

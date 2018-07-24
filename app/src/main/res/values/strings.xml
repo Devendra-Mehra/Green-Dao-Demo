@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">GreenDaoDemo</string>
+    <string name="name">Name</string>
+    <string name="city">City</string>
+    <string name="user_name">User name</string>
+    <string name="state_city">State/City</string>
+    <string name="submit">Submit</string>
+    <string name="user_name_error">User name is mandatory</string>
+    <string name="state_city_error">State name and city name is mandatory</string>
 </resources>

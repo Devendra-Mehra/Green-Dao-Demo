@@ -14,7 +14,7 @@ public class DaoHelper {
 
     public static List<Class<? extends AbstractDao<?, ?>>> getAllDaos() {
         List<Class<? extends AbstractDao<?, ?>>> daos = new ArrayList<>();
-        daos.add(UserDao.class);
+        daos.add(UserEntityDao.class);
 
         return daos;
     }
