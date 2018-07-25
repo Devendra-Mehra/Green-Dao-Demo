@@ -8,6 +8,9 @@
     <string name="user_name_error">User name is mandatory</string>
     <string name="state_error">You have not enter your state</string>
     <string name="initial">First initial of the last</string>
+    <string name="no_data_available">No Data available</string>
+    <string name="no_record_found">No Record found</string>
+
 
     <string-array name="state_name">
         <item>Enter your state</item>

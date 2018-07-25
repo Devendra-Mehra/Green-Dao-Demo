@@ -5,7 +5,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginBottom="5dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
@@ -19,11 +19,13 @@
 
             <ImageView
                 android:id="@+id/image_view"
-                android:layout_width="58dp"
-                android:layout_height="58dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
                 android:contentDescription="@string/initial"
-                android:padding="6dp" />
+                android:padding="5dp"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_user_name"
