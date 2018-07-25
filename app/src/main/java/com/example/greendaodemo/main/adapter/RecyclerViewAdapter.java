@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -37,6 +38,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public interface ItemListener {
+        void onClick(UserEntity userEntity, int position);
+
     }
 
 
@@ -104,6 +107,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         WithDataViewHolder(WithDataRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+
+            binding.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onClick(data.get(getAdapterPosition()), getAdapterPosition());
+                }
+            });
         }
     }
 
@@ -120,15 +130,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void setData(List<UserEntity> userEntities) {
         this.data.addAll(userEntities);
-        // notifyItemInserted(data.size() + 1);
-        notifyDataSetChanged();
+        notifyItemInserted(data.size() + 1);
     }
 
     public void insertItem(UserEntity userEntity) {
         this.data.add(userEntity);
-        // notifyItemInserted(data.size() + 1);
-        notifyDataSetChanged();
+        notifyItemInserted(data.size() + 1);
 
+    }
+
+    public void delete(int position) {
+        data.remove(position);
+        notifyItemRemoved(position);
     }
 
 }

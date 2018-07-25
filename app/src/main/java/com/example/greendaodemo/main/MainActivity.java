@@ -5,25 +5,30 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.greendaodemo.R;
 import com.example.greendaodemo.database.user.entity.UserEntity;
 import com.example.greendaodemo.database.user.operations.UserOperations;
 import com.example.greendaodemo.databinding.ActivityMainBinding;
+import com.example.greendaodemo.databinding.CustomMaterialDilogBinding;
 import com.example.greendaodemo.main.adapter.RecyclerViewAdapter;
 import com.example.greendaodemo.utils.Constants;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private ActivityMainBinding binding;
+    private CustomMaterialDilogBinding materialDilogBinding;
     private Context context;
     private String selectedState;
     private RecyclerViewAdapter recyclerViewAdapter;
     private UserOperations userOperations;
+    private ArrayAdapter<CharSequence> spinnerAdapter;
 
 
     @Override
@@ -35,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         userOperations = UserOperations.getInstance(context);
 
 
-        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(context,
+        spinnerAdapter = ArrayAdapter.createFromResource(context,
                 R.array.state_name, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -63,6 +68,39 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 } else {
                     insertDataToInternal(userName, selectedState);
                 }
+            }
+        });
+
+        recyclerViewAdapter.setListener(new RecyclerViewAdapter.ItemListener() {
+            @Override
+            public void onClick(final UserEntity userEntity, final int position) {
+                materialDilogBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.custom_material_dilog, null, false);
+
+                final MaterialDialog materialDialog = new MaterialDialog.Builder(context)
+                        .title(R.string.title)
+                        .customView(materialDilogBinding.getRoot(), true)
+                        .show();
+
+
+                materialDilogBinding.etUserName.setText(userEntity.getUserName());
+                materialDilogBinding.spinnerState.setAdapter(spinnerAdapter);
+                materialDilogBinding.spinnerState.setSelection(spinnerAdapter.getPosition(userEntity.getUserState()));
+
+                materialDilogBinding.tvDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        userOperations.delete(userEntity.getUserId());
+                        recyclerViewAdapter.delete(position);
+                        materialDialog.dismiss();
+                    }
+                });
+                materialDilogBinding.tvUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
             }
         });
     }

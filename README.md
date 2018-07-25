@@ -1,2 +1,1 @@
-# Green Dao Demo
-
+#Green DAO : Android ORM

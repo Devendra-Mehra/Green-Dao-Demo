@@ -45,5 +45,8 @@ public class UserOperations extends BaseRepo {
                 .list();
     }
 
+    public void delete(Long userId) {
+        dao.deleteByKey(userId);
+    }
 
 }

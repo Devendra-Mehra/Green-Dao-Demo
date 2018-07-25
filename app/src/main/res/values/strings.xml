@@ -5,11 +5,14 @@
     <string name="user_name">User name</string>
     <string name="state_city">State/City</string>
     <string name="submit">Submit</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
     <string name="user_name_error">User name is mandatory</string>
     <string name="state_error">You have not enter your state</string>
     <string name="initial">First initial of the last</string>
     <string name="no_data_available">No Data available</string>
     <string name="no_record_found">No Record found</string>
+    <string name="title">Operations</string>
 
 
     <string-array name="state_name">
