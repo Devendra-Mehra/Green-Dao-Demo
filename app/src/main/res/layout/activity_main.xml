@@ -28,20 +28,17 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:hint="@string/user_name"
-                android:inputType="text"
-                android:maxLength="1"
+                android:inputType="textCapSentences"
+                android:maxLines="1"
                 android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/et_state_city"
+            <Spinner
+                android:id="@+id/spinner_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="14dp"
-                android:hint="@string/state_city"
-                android:inputType="text"
-                android:maxLength="1"
                 android:singleLine="true" />
 
             <TextView

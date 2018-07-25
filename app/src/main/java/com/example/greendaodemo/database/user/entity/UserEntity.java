@@ -1,60 +1,42 @@
 package com.example.greendaodemo.database.user.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
 public class UserEntity {
 
-    @Id
-    private String uId;
+
     private String userName;
-    private String stateCity;
+    private String userState;
 
     @Override
     public String toString() {
         return "UserEntity{" +
-                "uId='" + uId + '\'' +
-                ", userName='" + userName + '\'' +
-                ", stateCity='" + stateCity + '\'' +
+                "userName='" + userName + '\'' +
+                ", userState='" + userState + '\'' +
                 '}';
     }
 
-    @Generated(hash = 354220560)
-    public UserEntity(String uId, String userName, String stateCity) {
-        this.uId = uId;
+    @Generated(hash = 143625408)
+    public UserEntity(String userName, String userState) {
         this.userName = userName;
-        this.stateCity = stateCity;
+        this.userState = userState;
     }
-
     @Generated(hash = 1433178141)
     public UserEntity() {
     }
-
-    public String getUId() {
-        return this.uId;
-    }
-
-    public void setUId(String uId) {
-        this.uId = uId;
-    }
-
     public String getUserName() {
         return this.userName;
     }
-
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-    public String getStateCity() {
-        return this.stateCity;
+    public String getUserState() {
+        return this.userState;
     }
-
-    public void setStateCity(String stateCity) {
-        this.stateCity = stateCity;
+    public void setUserState(String userState) {
+        this.userState = userState;
     }
-
 
 }

@@ -10,6 +10,7 @@ buildscript {
         constraintLayout = '1.1.2'
         testRunner = '1.0.2'
         espresso = '3.0.2'
+        textdrawable = '1.0.1'
     }
 
     repositories {
