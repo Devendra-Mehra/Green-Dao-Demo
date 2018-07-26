@@ -3,16 +3,21 @@ package com.example.greendaodemo.main;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.greendaodemo.R;
+import com.example.greendaodemo.database.base.BaseRepo;
 import com.example.greendaodemo.database.user.entity.UserEntity;
 import com.example.greendaodemo.database.user.operations.UserOperations;
 import com.example.greendaodemo.databinding.ActivityMainBinding;
@@ -133,12 +138,45 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    private void insertDataToInternal(String userName, String state) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setUserName(userName);
-        userEntity.setUserState(state);
-        userOperations.insertUser(userEntity);
-        addItemToRecyclerView(userEntity);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_delete_all) {
+
+            if (userOperations.getUserEntity().size() == 0) {
+                Toast.makeText(context, "You have no enter to delete", Toast.LENGTH_SHORT).show();
+            } else {
+                new MaterialDialog.Builder(this)
+                        .title(R.string.title)
+                        .content(R.string.content)
+                        .positiveText(R.string.agree)
+                        .negativeText(R.string.disagree)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                new BaseRepo().truncate(UserEntity.class);
+                                recyclerViewAdapter.truncate();
+                                dialog.dismiss();
+                            }
+                        })
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -150,6 +188,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    private void insertDataToInternal(String userName, String state) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUserName(userName);
+        userEntity.setUserState(state);
+        userOperations.insertUser(userEntity);
+        addItemToRecyclerView(userEntity);
     }
 
     private void addItemToRecyclerView(UserEntity userEntity) {
@@ -164,4 +210,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             recyclerViewAdapter.setData(userOperations.getUserEntity());
         }
     }
+
 }

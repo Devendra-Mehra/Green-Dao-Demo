@@ -130,18 +130,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void setData(List<UserEntity> userEntities) {
         this.data.addAll(userEntities);
-        notifyItemInserted(data.size() );
+        notifyItemInserted(data.size());
     }
 
     public void insertItem(UserEntity userEntity) {
         this.data.add(userEntity);
-        notifyItemInserted(data.size() );
+        notifyItemInserted(data.size());
 
     }
 
     public void delete(int position) {
         data.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void truncate() {
+        data.clear();
+        notifyDataSetChanged();
     }
 
 

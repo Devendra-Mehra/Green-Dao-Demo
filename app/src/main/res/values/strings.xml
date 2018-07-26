@@ -13,6 +13,10 @@
     <string name="no_data_available">No Data available</string>
     <string name="no_record_found">No Record found</string>
     <string name="title">Operations</string>
+    <string name="agree">YES</string>
+    <string name="disagree">NO</string>
+    <string name="content">Are you sure you want to delete all data?</string>
+    <string name="delete_all_data">Delete all data</string>
 
 
     <string-array name="state_name">
