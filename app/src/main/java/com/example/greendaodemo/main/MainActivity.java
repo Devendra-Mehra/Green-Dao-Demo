@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     Toast.makeText(context, R.string.state_error, Toast.LENGTH_SHORT).show();
                 } else {
                     insertDataToInternal(userName, selectedState);
+                    selectedState = Constants.ENTER_YOUR_STATE;
+
                 }
             }
         });
@@ -81,10 +83,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         .customView(materialDilogBinding.getRoot(), true)
                         .show();
 
-
+                selectedState = userEntity.getUserState();
                 materialDilogBinding.etUserName.setText(userEntity.getUserName());
                 materialDilogBinding.spinnerState.setAdapter(spinnerAdapter);
                 materialDilogBinding.spinnerState.setSelection(spinnerAdapter.getPosition(userEntity.getUserState()));
+                materialDilogBinding.spinnerState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        selectedState = adapterView.getItemAtPosition(i).toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
 
                 materialDilogBinding.tvDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -98,6 +111,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 materialDilogBinding.tvUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        String userName = materialDilogBinding.etUserName.getText().toString();
+
+                        if (userName.equals(userEntity.getUserName()) && selectedState.equals(userEntity.getUserState())) {
+                            Toast.makeText(context, "You have not edited any thing yet to update", Toast.LENGTH_SHORT).show();
+                        } else if (selectedState.equals(Constants.ENTER_YOUR_STATE)) {
+                            Toast.makeText(context, R.string.state_error, Toast.LENGTH_SHORT).show();
+                        } else {
+                            userEntity.setUserState(selectedState);
+                            userEntity.setUserName(userName);
+                            userOperations.upDate(userEntity);
+                            recyclerViewAdapter.notifyItemChanged(position);
+                            materialDialog.dismiss();
+                        }
 
                     }
                 });

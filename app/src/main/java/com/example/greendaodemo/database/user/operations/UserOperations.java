@@ -49,4 +49,9 @@ public class UserOperations extends BaseRepo {
         dao.deleteByKey(userId);
     }
 
+
+    public void upDate(UserEntity userEntity) {
+        dao.updateInTx(userEntity);
+    }
+
 }
