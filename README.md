@@ -10,20 +10,20 @@ We need to write raw queries and manipulation through `cursors`.
 
 It becomes difficult to manage when the code base becomes large and manual errors are more possible.   
 
-##So how do we solve our problems?
+#### So how do we solve our problems?
 
 The solution to this is using `Data Access Objects` or DAOs.
 
-##And what is DAO or greenDao exactly?
+## And what is DAO or greenDao exactly :confused:?
 
 It is an open source Android ORM `(Object-Relational Mapping)` making development for SQLite databases easy
 
-##So the question is how do we start  ?
+## So the question is how do we start  ?
 
->Here is the app build using[greenDAO](http://greenrobot.org/greendao/)step by step for you to understand.
+>Here is the app build using [greenDAO](http://greenrobot.org/greendao/)step by step for you to understand.
 
 
-###Here is the list of thing to achieve our app.
+### Here is the list of thing to achieve our app.
 
 
 - [ ] Add Gradle dependency in app/build.gradle.
@@ -35,7 +35,7 @@ It is an open source Android ORM `(Object-Relational Mapping)` making developmen
 - [ ] specify the schema version of the database
 
 
-#####So let's start
+#### So let's start
 
 - [x] Add Gradle dependency in app/build.gradle.
 
@@ -77,7 +77,7 @@ public class UserEntity {
 
 When you build the project, it will generate getter, setters, and constructors for this class.
 
-######But what this annotation **@Entity**,**@Id** and  **@Property** mean?
+###### But what this annotation **@Entity**,**@Id** and  **@Property** mean?
 
 1. [@Entity](http://greenrobot.org/greendao/documentation/modelling-entities/)
    - It turns the Java class User into a database-backed entity. This will also instruct greenDAO to generate the necessary code.
@@ -152,7 +152,7 @@ public class UserOperations extends BaseRepo {
         return instance;
     }
     /** 
-     * @return list of user entity from teh table name UserEntity
+     * @return list of user entity from the table name UserEntity in the database
      */
     public List<UserEntity> getUserEntity() {
         return dao.queryBuilder()
@@ -176,7 +176,7 @@ public class MainActivity  {
         context=this;
         userOperations = UserOperations.getInstance(context);
         
-        //Here we get the list of record from the UserEntity table
+        //Here we get the list of record from the table name UserEntity in the database
         List<UserEntity> userEntityList=userOperations.getUserEntityList();
 
         }
@@ -186,6 +186,7 @@ public class MainActivity  {
 - [x] specify the schema version of the database
 
 You will need to specify the schema version of the database so that you can get the old version and new version when the app is upgraded. To specify this add greendao schema in the app/build.gradle.
+
 ```
 greendao {
 android {
@@ -195,3 +196,4 @@ android {
     daoPackage "com.example.greendaodemo.database.base"
 }
 ```
+#So here is your app ready with greenDao
