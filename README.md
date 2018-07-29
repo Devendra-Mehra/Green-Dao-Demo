@@ -29,20 +29,23 @@ It is an open source Android ORM `(Object-Relational Mapping)` making developmen
 - [ ] Add Gradle dependency in app/build.gradle.
 - [ ] Add  Gradle plugin for the Annotation processing in the project’s build.gradle.
 - [ ] GreenDAO requires us to create the schema of the table in the form of a class
-- [ ] Construct the DaoSession Object in AndroidManifest
-- [ ] Test the table in the main activity
+- [ ] Explore the DAO generated classes
+- [ ] Construct a class to communicate with the database
+- [ ] Test the table in the Main activity
+- [ ] specify the schema version of the database
 
 
 #####So let's start
 
-- [ ] Add Gradle dependency in app/build.gradle.
+- [x] Add Gradle dependency in app/build.gradle.
 
 ```
 greenDao = '3.1.1'
 implementation "org.greenrobot:greendao:$rootProject.greenDao"
 ```
 
-- [ ] Add  Gradle plugin for the Annotation processing in the project’s build.gradle.
+
+- [x] Add  Gradle plugin for the Annotation processing in the project’s build.gradle.
 
 ```
 classpath ‘org.greenrobot:greendao-gradle-plugin:3.2.1’
@@ -53,14 +56,14 @@ classpath ‘org.greenrobot:greendao-gradle-plugin:3.2.1’
 ```
 apply plugin: ‘org.greenrobot.greendao’
 ```
-- [ ] GreenDAO requires us to create the schema of the table in the form of a class
+
+- [x] GreenDAO requires us to create the schema of the table in the form of a class
 
 ```Java
 @Entity(nameInDb = "user_entity")
 public class UserEntity {
     
     @Id(autoincrement = true)
-
     @Property(nameInDb = "user_id")
     private Long userId;
     
@@ -73,7 +76,8 @@ public class UserEntity {
 ```
 
 When you build the project, it will generate getter, setters, and constructors for this class.
-######But what this annotation **@Entity**,**@Id** and  **@Property** mean
+
+######But what this annotation **@Entity**,**@Id** and  **@Property** mean?
 
 1. [@Entity](http://greenrobot.org/greendao/documentation/modelling-entities/)
    - It turns the Java class User into a database-backed entity. This will also instruct greenDAO to generate the necessary code.
@@ -81,3 +85,113 @@ When you build the project, it will generate getter, setters, and constructors f
    - It selects a long/ Long property as the entity ID. In database terms, it’s the primary key. The parameter autoincrement is a flag to make the ID value ever increasing (not reusing old values).
 3. [@Property](http://greenrobot.org/greendao/documentation/modelling-entities/)
    - It lets you define a non-default column name, which the property is mapped to. If absent, greenDAO will use the field name in a SQL-ish fashion.
+
+
+- [x] Explore the DAO generated classes
+
+```Java
+public class BaseRepo {
+
+    private static BaseRepo instance = null;
+    protected DaoSession daoSession;
+
+    public BaseRepo() {
+        daoSession = DAOSessionHolder.getInstance().getDaoSession();
+        if (daoSession == null) {
+            MySQLiteOpenHelper helper = new MySQLiteOpenHelper(Application.getContext(), "greenDaoDemo.db");
+            Database db = helper.getWritableDb();
+            daoSession = new DaoMaster(db).newSession();
+            DAOSessionHolder.getInstance().putDaoSession(daoSession);
+        }
+    }
+
+    public static BaseRepo getInstance() {
+        if (instance == null) {
+            instance = new BaseRepo();
+        }
+        return instance;
+    }
+}
+```
+
+1. DaoMaster: This class defines the methods for database creation and manipulation.
+2. DaoSession: This class provides the DAO classes for accessing the database tables.
+3. MySQLiteOpenHelper class
+```Java
+public class MySQLiteOpenHelper extends DaoMaster.OpenHelper {
+
+    public MySQLiteOpenHelper(Context context, String name) {
+        super(context, name);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        super.onUpgrade(db, oldVersion, newVersion);
+        MigrationHelper.migrate(db, DaoHelper.getAllDaos());
+    }
+}
+```
+
+- [x] Construct a class to communicate with the database
+
+```Java
+public class UserOperations extends BaseRepo {
+
+    private static UserOperations instance = null;
+    private UserEntityDao dao;
+
+    private UserOperations(Context context) {
+        super();
+        dao = daoSession.getUserEntityDao();
+    }
+
+    public static UserOperations getInstance(Context context) {
+        if (instance == null) {
+            instance = new UserOperations(context);
+        }
+        return instance;
+    }
+    /** 
+     * @return list of user entity from teh table name UserEntity
+     */
+    public List<UserEntity> getUserEntity() {
+        return dao.queryBuilder()
+                .list();
+    }
+}
+```
+
+- [x] Test the table in the Main activity
+
+```Java
+public class MainActivity  {
+
+    private Context context;
+    private UserOperations userOperations;
+    
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context=this;
+        userOperations = UserOperations.getInstance(context);
+        
+        //Here we get the list of record from the UserEntity table
+        List<UserEntity> userEntityList=userOperations.getUserEntityList();
+
+        }
+}
+```
+
+- [x] specify the schema version of the database
+
+You will need to specify the schema version of the database so that you can get the old version and new version when the app is upgraded. To specify this add greendao schema in the app/build.gradle.
+```
+greendao {
+android {
+	...
+}
+    schemaVersion 1
+    daoPackage "com.example.greendaodemo.database.base"
+}
+```

@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         context = this;
         userOperations = UserOperations.getInstance(context);
 
-
         spinnerAdapter = ArrayAdapter.createFromResource(context,
                 R.array.state_name, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -149,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         int id = item.getItemId();
         if (id == R.id.action_delete_all) {
 
-            if (userOperations.getUserEntity().size() == 0) {
+            if (userOperations.getUserEntityList().size() == 0) {
                 Toast.makeText(context, "You have no enter to delete", Toast.LENGTH_SHORT).show();
             } else {
                 new MaterialDialog.Builder(this)
@@ -207,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void setRecyclerView() {
 
         if (userOperations != null) {
-            recyclerViewAdapter.setData(userOperations.getUserEntity());
+            recyclerViewAdapter.setData(userOperations.getUserEntityList());
         }
     }
 

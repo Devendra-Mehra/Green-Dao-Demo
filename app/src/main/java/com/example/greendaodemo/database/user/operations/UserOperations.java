@@ -40,7 +40,12 @@ public class UserOperations extends BaseRepo {
         dao.insertOrReplaceInTx(userEntity);
     }
 
-    public List<UserEntity> getUserEntity() {
+
+    /**
+     *
+     * @return list of user entity from teh table name UserEntity
+     */
+    public List<UserEntity> getUserEntityList() {
         return dao.queryBuilder()
                 .list();
     }
