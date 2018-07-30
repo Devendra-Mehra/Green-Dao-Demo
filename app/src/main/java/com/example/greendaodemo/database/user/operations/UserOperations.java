@@ -43,7 +43,7 @@ public class UserOperations extends BaseRepo {
 
     /**
      *
-     * @return list of user entity from teh table name UserEntity
+     * @return list of user entity from the table name UserEntity in the database
      */
     public List<UserEntity> getUserEntityList() {
         return dao.queryBuilder()

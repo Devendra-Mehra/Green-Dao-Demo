@@ -196,4 +196,4 @@ android {
     daoPackage "com.example.greendaodemo.database.base"
 }
 ```
-#So here is your app ready with greenDao
+## So here is your app ready with greenDao database
