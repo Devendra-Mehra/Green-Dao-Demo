@@ -39,7 +39,7 @@ It is an open source Android ORM `(Object-Relational Mapping)` making developmen
 
 - [x] Add Gradle dependency in app/build.gradle.
 
-```
+```gradle
 greenDao = '3.1.1'
 implementation "org.greenrobot:greendao:$rootProject.greenDao"
 ```
@@ -47,13 +47,13 @@ implementation "org.greenrobot:greendao:$rootProject.greenDao"
 
 - [x] Add  Gradle plugin for the Annotation processing in the project’s build.gradle.
 
-```
+```gradle
 classpath ‘org.greenrobot:greendao-gradle-plugin:3.2.1’
 ```
 
 >Then use this plugin in the app/build.gradle, below com.android.application plugin
 
-```
+```gradle
 apply plugin: ‘org.greenrobot.greendao’
 ```
 
@@ -187,7 +187,7 @@ public class MainActivity  {
 
 You will need to specify the schema version of the database so that you can get the old version and new version when the app is upgraded. To specify this add greendao schema in the app/build.gradle.
 
-```
+```gradle
 greendao {
 android {
 	...
