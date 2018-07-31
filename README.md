@@ -203,6 +203,9 @@ android {
   <img src="/assets/Screen_3.png" alt="Screenshots"  height="500" width="280"/>
 </p>
 
+# Download
+
+<a href="https://github.com/The-Devendra/Green-Dao-Demo/blob/master/apk/app-debug.apk">Click here to download!</a>
 ### Libraries Used
 * [Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
 * [Green Dao](http://greenrobot.org/greendao/)
