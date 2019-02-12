@@ -205,7 +205,7 @@ android {
 
 # Download
 
-<a href="https://github.com/The-Devendra/Green-Dao-Demo/blob/master/apk/app-debug.apk">Click here to download!</a>
+<a href="https://github.com/The-Devendra/Green-Dao-Demo/raw/master/apk/app-debug.apk">Click here to download!</a>
 ### Libraries Used
 * [Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
 * [Green Dao](http://greenrobot.org/greendao/)
